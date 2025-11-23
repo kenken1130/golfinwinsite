@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIN Predict GOLF | 次世代ゴルフ観戦エコシステム</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        golf: {
+                            black: '#050a08', // 極めて深い緑黒
+                            dark: '#0f1c18',  // ダークグリーン
+                            accent: '#22c55e', // 標準グリーン
+                            neon: '#39ff14',   // ネオンライム (Cyber Golf Color)
+                            glow: '#bbf7d0',   // 発光用
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans JP', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #39ff1410 1px, transparent 1px), linear-gradient(to bottom, #39ff1410 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050a08;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        /* ネオンテキスト効果 */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+        }
+        .box-glow {
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.15);
+        }
+        /* 背景のグリッドアニメーション */
+        .bg-cyber-grid {
+            background-size: 40px 40px;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+        /* ガラスモーフィズム */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+        }
+        .glass-card:hover {
+            border-color: #39ff14;
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.2);
+        }
+        /* スマホモックアップの3D浮遊 */
+        .floating-mockup {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        /* カスタムスクロールバー */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f1c18; }
+        ::-webkit-scrollbar-thumb { background: #39ff14; border-radius: 4px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-golf-neon selection:text-golf-black">
+
+    <!-- 背景装飾 -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute top-0 w-full h-[800px] bg-cyber-grid opacity-20"></div>
+        <div class="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-golf-neon rounded-full opacity-5 blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600 rounded-full opacity-5 blur-[120px]"></div>
+    </div>
+
+    <!-- ナビゲーション -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-2">
+                    <!-- ロゴアイコン -->
+                    <div class="w-8 h-8 bg-golf-neon rounded flex items-center justify-center">
+                        <i data-lucide="flag" class="text-golf-black w-5 h-5 fill-current"></i>
+                    </div>
+                    <span class="text-2xl font-heading font-black tracking-tighter text-white">WIN <span class="text-golf-neon text-glow">GOLF</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#experience" class="text-sm font-bold text-gray-300 hover:text-golf-neon transition uppercase tracking-widest">Experience</a>
+                    <a href="#business" class="text-sm font-bold text-gray-300 hover:text-golf-neon transition uppercase tracking-widest">Partnership</a>
+                    <a href="#contact" class="bg-white/10 hover:bg-golf-neon hover:text-golf-black border border-golf-neon text-golf-neon px-6 py-2 rounded-full text-sm font-bold transition duration-300 flex items-center">
+                        <span>Early Access</span>
+                        <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ヒーローセクション -->
+    <section class="relative z-10 pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="lg:grid lg:grid-cols-12 gap-16 items-center">
+                <!-- テキストエリア -->
+                <div class="lg:col-span-7 text-center lg:text-left mb-16 lg:mb-0">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-golf-neon/10 border border-golf-neon/20 mb-8">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-golf-neon opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-golf-neon"></span>
+                        </span>
+                        <span class="text-golf-neon text-xs font-bold tracking-widest uppercase">Golf Tech Revolution</span>
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-heading font-black leading-tight mb-6">
+                        PREDICT THE <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-golf-neon to-teal-400 text-glow">PERFECT SHOT.</span>
+                    </h1>
+                    <p class="text-gray-400 text-lg lg:text-xl mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        「静寂」のスポーツに、「熱狂」のデータを。<br>
+                        ゴルフ観戦を<span class="text-white font-bold border-b border-golf-neon">「予測エンターテインメント」</span>へと進化させる、次世代のファンエンゲージメントプラットフォーム。
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button class="bg-golf-neon text-golf-black px-8 py-4 rounded-xl font-bold text-lg shadow-[0_0_20px_rgba(57,255,20,0.4)] hover:shadow-[0_0_40px_rgba(57,255,20,0.6)] hover:scale-105 transition duration-300 flex items-center justify-center">
+                            デモを体験する
+                            <i data-lucide="play-circle" class="ml-2 w-5 h-5"></i>
+                        </button>
+                        <button class="glass-card px-8 py-4 rounded-xl font-bold text-lg text-white hover:bg-white/10 transition duration-300">
+                            資料ダウンロード
+                        </button>
+                    </div>
+                    
+                    <!-- 実績/信頼性 -->
+                    <div class="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 text-gray-500 text-sm font-mono">
+                        <p>POWERED BY:</p>
+                        <div class="flex gap-6 opacity-60 grayscale hover:grayscale-0 transition duration-500">
+                            <span class="font-bold text-lg text-white">DATA-GOLF API</span>
+                            <span class="font-bold text-lg text-white">BLOCKCHAIN</span>
+                            <span class="font-bold text-lg text-white">AI ANALYSIS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- モックアップビジュアル -->
+                <div class="lg:col-span-5 relative flex justify-center perspective-1000">
+                    <!-- 装飾的な円 -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-golf-neon/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-dashed border-white/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                    
+                    <!-- スマホ本体 -->
+                    <div class="floating-mockup relative z-10 w-[300px] h-[600px] bg-golf-black rounded-[3rem] border-[8px] border-gray-800 shadow-2xl overflow-hidden">
+                        <!-- 画面上部 -->
+                        <div class="absolute top-0 w-full h-8 bg-gray-800 rounded-b-xl z-20 flex justify-center items-center">
+                            <div class="w-16 h-4 bg-black rounded-full"></div>
+                        </div>
+                        
+                        <!-- アプリ画面 -->
+                        <div class="w-full h-full bg-gradient-to-b from-gray-900 to-golf-dark text-white p-4 pt-12 flex flex-col relative">
+                            <!-- 背景画像（コースマップ風） -->
+                            <div class="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center grayscale"></div>
+                            
+                            <!-- ヘッダー -->
+                            <div class="flex justify-between items-center mb-6 relative z-10">
+                                <span class="text-xs font-mono text-golf-neon">LIVE • FINAL ROUND</span>
+                                <span class="bg-red-600 text-[10px] font-bold px-2 py-0.5 rounded">ON AIR</span>
+                            </div>
+
+                            <!-- メインカード：選手 -->
+                            <div class="glass-card p-4 mb-4 relative z-10 border-golf-neon/30">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="w-10 h-10 rounded-full bg-gray-700 overflow-hidden border-2 border-golf-neon">
+                                        <!-- プレースホルダーアバター -->
+                                        <img src="https://i.pravatar.cc/100?img=33" class="w-full h-full object-cover">
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold">Hideki T.</p>
+                                        <p class="text-xs text-gray-400">18th Hole - Par 4</p>
+                                    </div>
+                                    <div class="ml-auto text-right">
+                                        <p class="text-xl font-black font-heading text-white">-12</p>
+                                        <p class="text-[10px] text-golf-neon">LEADER</p>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="text-xs font-bold mb-2 text-gray-300">NEXT SHOT PREDICTION</p>
+                                    <div class="flex gap-2">
+                                        <button class="flex-1 bg-golf-neon text-black text-xs font-bold py-2 rounded hover:bg-white transition">Birdie<br><span class="text-[9px] opacity-70">x3.5</span></button>
+                                        <button class="flex-1 bg-white/10 text-white text-xs font-bold py-2 rounded hover:bg-white/20 transition">Par<br><span class="text-[9px] opacity-70">x1.2</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 投げ銭/応援 -->
+                            <div class="mt-auto mb-4 relative z-10">
+                                <p class="text-center text-xs text-gray-400 mb-2">Send Support Gift</p>
+                                <div class="flex justify-center gap-4">
+                                    <div class="flex flex-col items-center animate-bounce">
+                                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 to-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/50">
+                                            <i data-lucide="clapperboard" class="w-5 h-5 text-white"></i>
+                                        </div>
+                                        <span class="text-[10px] mt-1 font-bold">Clap!</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 機能セクション (WAKUWAKU) -->
+    <section id="experience" class="py-24 relative z-10 bg-golf-dark/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl lg:text-5xl font-heading font-black mb-4">GAME CHANGERS</h2>
+                <p class="text-gray-400 text-lg">ゴルフ観戦を「受動」から「能動」へ変える3つのテクノロジー</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass-card p-8 hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-golf-neon/10 flex items-center justify-center mb-6 group-hover:bg-golf-neon transition duration-300">
+                        <i data-lucide="crosshair" class="w-8 h-8 text-golf-neon group-hover:text-black transition duration-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Micro-Betting</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        「優勝は誰か」だけじゃない。<br>
+                        このパットは入るか？ドラコンは誰が取るか？<br>
+                        <span class="text-white font-bold">1打ごとのリアルタイム予測</span>が、静かなグリーンをスタジアムに変える。
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-8 hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6 group-hover:bg-blue-500 transition duration-300">
+                        <i data-lucide="gem" class="w-8 h-8 text-blue-400 group-hover:text-white transition duration-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Premium Support</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        推しのプロゴルファーへ、<br>
+                        デジタルの「ナイスショット！」を届けよう。<br>
+                        <span class="text-white font-bold">ギフティング機能</span>により、ファンと選手の新しい繋がりと収益モデルを構築。
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card p-8 hover:-translate-y-2 transition-all duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6 group-hover:bg-purple-500 transition duration-300">
+                        <i data-lucide="smartphone-nfc" class="w-8 h-8 text-purple-400 group-hover:text-white transition duration-300"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Sponsor Quests</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        「新作ドライバーの動画を見てポイントGET」<br>
+                        楽しみながら自然に完了するタスク。<br>
+                        <span class="text-white font-bold">ゲーミフィケーション</span>された広告体験が、圧倒的なエンゲージメントを生む。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ビジネスモデル (High ROI) -->
+    <section id="business" class="py-24 relative overflow-hidden">
+        <!-- 背景の光 -->
+        <div class="absolute right-0 top-0 w-2/3 h-full bg-gradient-to-l from-golf-dark to-transparent opacity-50 z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="lg:grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-sm font-bold text-golf-neon tracking-widest mb-2 uppercase">For Sponsors & Partners</h2>
+                    <h3 class="text-4xl lg:text-5xl font-heading font-black mb-8 leading-tight">
+                        富裕層マーケティングの<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">最適解へ。</span>
+                    </h3>
+                    <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+                        ゴルフファンは他のスポーツと比較して、可処分所得が高く、道具やライフスタイルへの投資意欲が旺盛です。<br>
+                        WIN GOLFは、単なる露出ではなく、<strong class="text-white border-b border-golf-neon">「深い理解と行動」</strong>を伴うリード獲得を実現します。
+                    </p>
+                    
+                    <ul class="space-y-6">
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-golf-neon flex items-center justify-center mt-1">
+                                <i data-lucide="check" class="w-4 h-4 text-black font-bold"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-bold text-white">ROI保証モデル</p>
+                                <p class="text-sm text-gray-400 mt-1">タスク完了（動画視聴・アンケート）ベースの課金で、無駄な広告費をゼロに。</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-golf-neon flex items-center justify-center mt-1">
+                                <i data-lucide="trending-up" class="w-4 h-4 text-black font-bold"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-xl font-bold text-white">高精度な行動データ</p>
+                                <p class="text-sm text-gray-400 mt-1">「どの選手を応援しているか」「どのギアに興味があるか」の熱量データを可視化。</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="mt-10">
+                        <a href="mailto:partner@win-predict.com" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold leading-6 text-white transition duration-150 ease-in-out bg-white/5 border border-white/20 rounded-full hover:bg-white/10 hover:border-golf-neon">
+                            パートナーシップ資料を請求
+                            <i data-lucide="download" class="ml-2 w-5 h-5 text-golf-neon"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- データビジュアライゼーション（イメージ） -->
+                <div class="relative mt-12 lg:mt-0">
+                    <div class="glass-card p-6 lg:p-10 transform rotate-1 hover:rotate-0 transition duration-500">
+                        <div class="flex justify-between items-end mb-6">
+                            <div>
+                                <p class="text-gray-400 text-sm uppercase">Conversion Rate</p>
+                                <p class="text-4xl font-black text-white mt-1">18.5<span class="text-golf-neon text-2xl">%</span></p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-bold text-golf-neon bg-golf-neon/10 px-2 py-1 rounded">+12.4% vs Traditional Ads</span>
+                            </div>
+                        </div>
+                        <!-- グラフバーの装飾 -->
+                        <div class="flex items-end space-x-4 h-48 mt-4">
+                            <div class="w-1/5 bg-gray-700 rounded-t h-[30%] animate-[pulse_2s_infinite]"></div>
+                            <div class="w-1/5 bg-gray-700 rounded-t h-[45%] animate-[pulse_2.5s_infinite]"></div>
+                            <div class="w-1/5 bg-gray-600 rounded-t h-[40%] animate-[pulse_3s_infinite]"></div>
+                            <div class="w-1/5 bg-gradient-to-t from-golf-dark to-golf-neon rounded-t h-[85%] box-glow relative group">
+                                <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-white text-black text-xs font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">WIN</div>
+                            </div>
+                            <div class="w-1/5 bg-gradient-to-t from-golf-dark to-golf-neon rounded-t h-[95%] box-glow"></div>
+                        </div>
+                        <p class="text-center text-xs text-gray-500 mt-6">Comparing engagement rates: Standard Banner vs WIN GOLF Tasks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="py-24 relative">
+        <div class="absolute inset-0 bg-gradient-to-t from-golf-neon/10 to-transparent pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl lg:text-6xl font-heading font-black mb-6">READY TO TEE OFF?</h2>
+            <p class="text-xl text-gray-300 mb-12">
+                ゴルフの未来は、ここから始まります。<br>
+                まずはデモアプリで、その「興奮」を体験してください。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="#" class="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-golf-neon px-10 font-medium text-neutral-900 transition-all duration-300 hover:bg-white hover:ring-2 hover:ring-golf-neon hover:ring-offset-2 hover:ring-offset-black">
+                    <span class="absolute h-0 w-0 rounded-full bg-white transition-all duration-500 ease-out group-hover:h-56 group-hover:w-56"></span>
+                    <span class="relative font-black text-lg flex items-center">
+                        デモアプリを起動
+                        <i data-lucide="arrow-up-right" class="ml-2 w-5 h-5"></i>
+                    </span>
+                </a>
+            </div>
+            <p class="mt-8 text-sm text-gray-500">
+                iOS / Android 対応 Webアプリ • 登録無料
+            </p>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="border-t border-white/10 bg-black pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-8 md:mb-0">
+                <span class="text-2xl font-heading font-black text-white flex items-center gap-2">
+                    <i data-lucide="flag" class="text-golf-neon w-6 h-6"></i>
+                    WIN PREDICT
+                </span>
+                <p class="text-gray-500 text-sm mt-2">Golf Engagement Platform for the Future.</p>
+            </div>
+            <div class="flex space-x-8 text-sm text-gray-400">
+                <a href="#" class="hover:text-golf-neon transition">Company</a>
+                <a href="#" class="hover:text-golf-neon transition">Privacy</a>
+                <a href="#" class="hover:text-golf-neon transition">Contact</a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-12 text-center md:text-left">
+            <p class="text-xs text-gray-700">&copy; 2025 WIN Predict Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // アイコンの初期化
+        lucide.createIcons();
+    </script>
+</body>
+</html>
